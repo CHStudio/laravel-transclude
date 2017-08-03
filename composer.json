@@ -20,5 +20,15 @@
             "name": "Simon FREMAUX",
             "email": "simon.fremaux@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "CHStudio\\LaravelTransclude\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CHStudio\\LaravelTransclude\\Tests\\": "tests"
+        }
+    }
 }
