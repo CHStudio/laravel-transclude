@@ -1,6 +1,6 @@
 <?php
 
-namespace CHStudio\LaravelTransclude\Compilers;
+namespace CHStudio\LaravelTransclude;
 
 use CHStudio\LaravelTransclude\Exceptions\TranscludeNotStarted;
 use CHStudio\LaravelTransclude\Exceptions\MissingTranscludeDirective;
@@ -87,22 +87,15 @@ PHP;
     /**
      * Compile the transcluded statements into valid PHP.
      *
-     * @param  string  $expression
      * @return string
      */
-    public function compileTranscluded($expression)
+    public function compileTranscluded()
     {
-        if (is_null($expression)) {
-            $expression = '()';
-        }
-        return "<?php echo \${$this->name}->echoLastTranscluded(); ?>";
+        return "<?php echo \${$this->name}->echoLatestTranscluded(); ?>";
     }
 
     /**
-     * Start buffering for transcluding
-     *
-     * @param  string  $expression
-     * @return string
+     * Start buffering
      */
     public function startTranscluding()
     {
@@ -110,38 +103,27 @@ PHP;
     }
 
     /**
-     * End buffering for transcluding
-     *
-     * @param  string  $expression
-     * @return string
+     * End buffering and save content
      */
     public function endTranscluding()
     {
-        // save content
         $this->transcludedContent[] = ob_get_clean();
     }
 
     /**
-     * Echo buffered content
+     * Return latest buffered content and drop it from collection
      *
-     * @param  boolean Poping the lst transcluded content
      * @return string
      */
-    public function echoLastTranscluded($pop = true)
+    public function echoLatestTranscluded()
     {
-        if (empty($this->transcludedContent)) {
+        if (0 === count($this->transcludedContent)) {
             throw new MissingTranscludeDirective(
                 'Cannot use transcluded directive without opening a transclude one.'
             );
         }
 
-        if (false === $pop) {
-            $ret = $this->transcludedContent[count($this->transcludedContent) - 1];
-        } else {
-            $ret = array_pop($this->transcludedContent);
-        }
-
-        return $ret;
+        return array_pop($this->transcludedContent);
     }
 
     /**

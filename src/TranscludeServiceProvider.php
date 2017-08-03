@@ -1,9 +1,10 @@
 <?php
 
-namespace CHStudio\LaravelTransclude\Providers;
+namespace CHStudio\LaravelTransclude;
 
 use CHStudio\LaravelTransclude\Compilers\TranscludeCompiler;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class TranscludeServiceProvider extends ServiceProvider
 {
@@ -17,8 +18,8 @@ class TranscludeServiceProvider extends ServiceProvider
         $compiler = new TranscludeCompiler;
         $this->app['view']->share($compiler->name, $compiler);
 
-        \Blade::directive('transclude', [$compiler, 'compileTransclude']);
-        \Blade::directive('endtransclude', [$compiler, 'compileEndTransclude']);
-        \Blade::directive('transcluded', [$compiler, 'compileTranscluded']);
+        Blade::directive('transclude', [$compiler, 'compileTransclude']);
+        Blade::directive('endtransclude', [$compiler, 'compileEndTransclude']);
+        Blade::directive('transcluded', [$compiler, 'compileTranscluded']);
     }
 }
