@@ -21,21 +21,21 @@ class TranscludeServiceProviderTest extends TestCase
             ->expects($this->exactly(3))
             ->method('directive')
             ->withConsecutive(
-                [$this->equalTo('transclude'), $this->callback(function($item) {
+                [$this->equalTo('transclude'), $this->callback(function ($item) {
                     $this->assertTrue(is_callable($item));
                     $this->assertInstanceOf(TranscludeCompiler::class, $item[0]);
                     $this->assertEquals('compileTransclude', $item[1]);
 
                     return true;
                 })],
-                [$this->equalTo('endtransclude'), $this->callback(function($item) {
+                [$this->equalTo('endtransclude'), $this->callback(function ($item) {
                     $this->assertTrue(is_callable($item));
                     $this->assertInstanceOf(TranscludeCompiler::class, $item[0]);
                     $this->assertEquals('compileEndTransclude', $item[1]);
 
                     return true;
                 })],
-                [$this->equalTo('transcluded'), $this->callback(function($item) {
+                [$this->equalTo('transcluded'), $this->callback(function ($item) {
                     $this->assertTrue(is_callable($item));
                     $this->assertInstanceOf(TranscludeCompiler::class, $item[0]);
                     $this->assertEquals('compileTranscluded', $item[1]);
@@ -51,7 +51,7 @@ class TranscludeServiceProviderTest extends TestCase
             ->will($this->returnValue($blade));
 
         $resolver = new EngineResolver;
-        $resolver->register('blade', function() use ($engine) {
+        $resolver->register('blade', function () use ($engine) {
             return $engine;
         });
 
@@ -65,11 +65,11 @@ class TranscludeServiceProviderTest extends TestCase
             ->expects($this->once())
             ->method('share')
             ->with(
-                $this->callback(function($item) {
+                $this->callback(function ($item) {
                     $this->assertEquals((new TranscludeCompiler)->getName(), $item);
                     return true;
                 }),
-                $this->callback(function($item) {
+                $this->callback(function ($item) {
                     $this->assertInstanceOf(TranscludeCompiler::class, $item);
                     return true;
                 })
