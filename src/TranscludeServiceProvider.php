@@ -2,7 +2,7 @@
 
 namespace CHStudio\LaravelTransclude;
 
-use CHStudio\LaravelTransclude\Compilers\TranscludeCompiler;
+use CHStudio\LaravelTransclude\TranscludeCompiler;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
@@ -16,7 +16,7 @@ class TranscludeServiceProvider extends ServiceProvider
     public function boot()
     {
         $compiler = new TranscludeCompiler;
-        $this->app['view']->share($compiler->name, $compiler);
+        $this->app['view']->share($compiler->getName(), $compiler);
 
         Blade::directive('transclude', [$compiler, 'compileTransclude']);
         Blade::directive('endtransclude', [$compiler, 'compileEndTransclude']);
