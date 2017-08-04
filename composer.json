@@ -1,6 +1,7 @@
 {
     "name": "chstudio/laravel-transclude",
     "description": "Allow to use Angular transclude features within Blade templates.",
+    "keywords": ["laravel", "transclude", "transclusion", "package"],
     "type": "library",
     "require": {
         "php": ">=5.6.4",
