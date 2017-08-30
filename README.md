@@ -29,7 +29,14 @@ composer require chstudio/laravel-transclude
 
 After updating composer, add the `ServiceProvider` to the providers array in `config/app.php`.
 
-### Laravel 5.x:
+### Laravel 5.5+
+
+This library is compatible with the package auto-discovery feature so you have nothing to do...
+If you prefer adding yourself your providers, please follow the [official documentation guidelines](https://laravel.com/docs/5.5/packages#package-discovery).
+
+### Laravel <5.5:
+
+Add this in the `providers` section of the `config/app.php` file :
 
 ```php
 CHStudio\LaravelTransclude\TranscludeServiceProvider::class,
